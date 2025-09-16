@@ -1,0 +1,159 @@
+#include <ESP8266WiFi.h>
+#include <ESP8266WebServer.h>
+#include <Servo.h>
+#include <SoftwareSerial.h>
+
+// ================== Pin Config ==================
+#define SERVO_TAIL D1
+#define SERVO_WING D2
+#define IN1 D5
+#define IN2 D6
+#define RELAY_PUMP D0
+#define MQ135 A0
+#define IR_SENSOR D3
+#define TRIG_PIN D4
+#define ECHO_PIN D7
+#define BATTERY_PIN A0
+
+// BLE HM-10 (TX, RX)
+SoftwareSerial BLE(14, 12); // D5 = RX, D6 = TX if rewired
+
+// ================== Globals ==================
+Servo servoTail;
+Servo servoWing;
+ESP8266WebServer server(80);
+
+int gasValue = 0;
+int oilValue = 0;
+long distance = 0;
+int batteryPercent = 0;
+
+int gasThreshold = 500;   // adjust experimentally
+int lowBattery = 20;      // %
+
+// ================== Functions ==================
+
+// Feeding control
+void feedFish(bool on) {
+  if (on) {
+    digitalWrite(IN1, HIGH);
+    digitalWrite(IN2, LOW);
+  } else {
+    digitalWrite(IN1, LOW);
+    digitalWrite(IN2, LOW);
+  }
+}
+
+// Pump control
+void controlPump(bool on) {
+  digitalWrite(RELAY_PUMP, on ? LOW : HIGH);
+}
+
+// Battery level
+int readBattery() {
+  int raw = analogRead(BATTERY_PIN);
+  return map(raw, 0, 1023, 0, 100);
+}
+
+// Distance using ultrasonic
+long getDistance() {
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  long duration = pulseIn(ECHO_PIN, HIGH, 20000);
+  return duration * 0.034 / 2;
+}
+
+// Send BLE alerts
+void sendBLE(String msg) {
+  BLE.println(msg);
+  Serial.println("BLE ALERT: " + msg);
+}
+
+// ================== Web UI ==================
+String webpage() {
+  String html = "<!DOCTYPE html><html><head><title>AquaBot-X</title>";
+  html += "<meta http-equiv='refresh' content='5'>"; // auto refresh
+  html += "<script src='https://cdn.jsdelivr.net/npm/chart.js'></script></head><body>";
+  html += "<h2>AquaBot-X Dashboard</h2>";
+
+  html += "<p><b>Gas Value:</b> " + String(gasValue) + "</p>";
+  html += "<p><b>Oil Detection:</b> " + String(oilValue) + "</p>";
+  html += "<p><b>Distance:</b> " + String(distance) + " cm</p>";
+  html += "<p><b>Battery:</b> " + String(batteryPercent) + "%</p>";
+
+  html += "<a href='/feedOn'><button>Feed Fish</button></a> ";
+  html += "<a href='/feedOff'><button>Stop Feeding</button></a><br><br>";
+  html += "<a href='/pumpOn'><button>Pump ON</button></a> ";
+  html += "<a href='/pumpOff'><button>Pump OFF</button></a><br><br>";
+
+  // Charts
+  html += "<canvas id='gasChart' width='300' height='150'></canvas>";
+  html += "<canvas id='batChart' width='300' height='150'></canvas>";
+
+  html += "<script>const gasCtx=document.getElementById('gasChart').getContext('2d');";
+  html += "new Chart(gasCtx,{type:'bar',data:{labels:['Gas'],datasets:[{label:'Gas Value',data:["
+          + String(gasValue) + "]}]}});";
+
+  html += "const batCtx=document.getElementById('batChart').getContext('2d');";
+  html += "new Chart(batCtx,{type:'doughnut',data:{labels:['Battery'],datasets:[{label:'Battery %',data:["
+          + String(batteryPercent) + ", " + String(100 - batteryPercent) + "]}]}});</script>";
+
+  html += "</body></html>";
+  return html;
+}
+
+// ================== Setup ==================
+void setup() {
+  Serial.begin(115200);
+  BLE.begin(9600);
+
+  // Pins
+  pinMode(IN1, OUTPUT);
+  pinMode(IN2, OUTPUT);
+  pinMode(RELAY_PUMP, OUTPUT);
+  digitalWrite(RELAY_PUMP, HIGH);
+  pinMode(IR_SENSOR, INPUT);
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+
+  // Servos
+  servoTail.attach(SERVO_TAIL);
+  servoWing.attach(SERVO_WING);
+
+  // WiFi
+  WiFi.softAP("AquaBot_X", "12345678");
+  Serial.println("WiFi Started: AquaBot_X");
+
+  // Routes
+  server.on("/", []() { server.send(200, "text/html", webpage()); });
+  server.on("/feedOn", []() { feedFish(true); server.send(200, "text/html", webpage()); });
+  server.on("/feedOff", []() { feedFish(false); server.send(200, "text/html", webpage()); });
+  server.on("/pumpOn", []() { controlPump(true); server.send(200, "text/html", webpage()); });
+  server.on("/pumpOff", []() { controlPump(false); server.send(200, "text/html", webpage()); });
+
+  server.begin();
+}
+
+// ================== Loop ==================
+void loop() {
+  server.handleClient();
+
+  // Read sensors
+  gasValue = analogRead(MQ135);
+  oilValue = digitalRead(IR_SENSOR);
+  distance = getDistance();
+  batteryPercent = readBattery();
+
+  // Alerts
+  if (gasValue > gasThreshold) sendBLE("⚠️ Gas Level High!");
+  if (batteryPercent < lowBattery) sendBLE("⚠️ Battery Low!");
+
+  // Tail swimming motion
+  servoTail.write(60);
+  delay(300);
+  servoTail.write(120);
+  delay(300);
+}
