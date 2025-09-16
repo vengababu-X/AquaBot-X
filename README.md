@@ -40,11 +40,27 @@ This project combines **IoT, robotics, and AI** to create a low-cost and educati
 - HM-10 BLE Module  
 
 ---
+## 📂 Project Structure  
 
+AquaBot-X/  
+│  
+├── code/  
+│   └── fish_robot_code.ino      # Main Arduino/NodeMCU code  
+│  
+├── circuit/  
+│   ├── wiring_diagram.png       # Wiring diagram  
+│   └── block_diagram.png        # Block connections  
+│  
+├── images/  
+│   ├── prototype1.jpg           # Prototype photo 1  
+│   ├── prototype2.jpg           # Prototype photo 2  
+│   └── poster.jpg               # Poster for presentation  
+│  
+├── web_ui/  
+│   └── web_ui.png               # Local server web UI screenshot  
+│  
+└── README.md                    # Project documentation
 
-## 📂 Project Structure
-
-AquaBot-X/ │── code/ │   └── fish_robot_code.ino      # Main Arduino/NodeMCU code │ │── circuit/ │   ├── wiring_diagram.png       # Wiring diagram │   └── block_diagram.png        # Block connections │ │── images/ │   ├── prototype1.jpg           # Prototype photo 1 │   ├── prototype2.jpg           # Prototype photo 2 │   └── poster.jpg               # Poster for presentation │ │── web_ui/ │   └── web_ui.png               # Local server web UI screenshot │ └── README.md                    # Project documentation
 
 ## ⚙️ How to Run  
 1. Clone this repository:  
