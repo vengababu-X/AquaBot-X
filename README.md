@@ -65,7 +65,7 @@ AquaBot-X/
 ## ⚙️ How to Run  
 1. Clone this repository:  
    ```bash
-   git clone https://github.com/your-username/AquaBot-X.git
+   git clone https://github.com/vengababu-X/AquaBot-X.git
 
 2. Open fish_robot_code.ino in Arduino IDE.
 
