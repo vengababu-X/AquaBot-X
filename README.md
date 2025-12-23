@@ -1,94 +1,151 @@
-# AquaBot-X
-“Biomimetic Smart AI Fish Robot for underwater exploration, pollution monitoring, and surveillance using NodeMCU, sensors, and servo motors.”
+<p align="center">
+  <img src="assets/aquabot_hero.gif" width="100%">
+</p>
 
-# 🐟 AquaBot-X  
-**Biomimetic Smart AI Fish Robot** for underwater exploration, pollution monitoring, and surveillance using **NodeMCU, sensors, and servo motors**.  
+<h1 align="center">🐟 AquaBot-X</h1>
 
----
+<p align="center">
+  <b>Biomimetic Smart AI Fish Robot</b><br>
+  <i>Underwater Exploration • Pollution Monitoring • Smart Surveillance</i>
+</p>
 
-## 📌 Project Overview  
-AquaBot-X is a prototype **AI-powered robotic fish** designed for:  
-- Underwater exploration  
-- Pollution monitoring  
-- Oil detection and gas sensing  
-- Automatic and manual navigation  
-- BLE alerts and real-time web interface  
-
-This project combines **IoT, robotics, and AI** to create a low-cost and educational solution for marine research and environmental monitoring.  
-
----
-
-## ✨ Features  
-- 🚤 Fish-like swimming motion with servo motors  
-- ⚡ Gas detection (MQ-135) with live charts  
-- 🌊 Oil detection using IR sensor  
-- 🔋 Battery monitoring with percentage calculation  
-- 📡 BLE alerts when thresholds are exceeded  
-- 🌐 Local web server for manual + autonomous navigation  
-- 🍽️ Fish feeding mechanism with gear motor  
+<p align="center">
+  <img src="https://img.shields.io/badge/IoT-ESP8266-blue">
+  <img src="https://img.shields.io/badge/Robotics-Biomimetic-green">
+  <img src="https://img.shields.io/badge/Sensors-MQ135%20%7C%20IR%20%7C%20Ultrasonic-orange">
+  <img src="https://img.shields.io/badge/Status-Prototype-success">
+</p>
 
 ---
 
-## 🔧 Components Used  
-- NodeMCU ESP8266  
-- MQ-135 Gas Sensor  
-- IR Sensor (oil detection)  
-- Ultrasonic Sensor (HC-SR04)  
-- 2 Servo Motors (propulsion + steering)  
-- Gear Motor + L298N Motor Driver (feeding)  
-- Mini Water Pump + Relay Module  
-- HM-10 BLE Module  
+## 🌊 Project Overview
+
+<p align="center">
+  <img src="assets/overview.gif" width="75%">
+</p>
+
+**AquaBot-X** is an AI-powered **robotic fish prototype** designed to mimic natural fish movement while performing intelligent underwater tasks such as:
+
+- 🌍 Underwater exploration  
+- 🧪 Pollution & gas monitoring  
+- 🛢️ Oil detection  
+- 🎮 Manual & autonomous navigation  
+- 📡 Real-time alerts and monitoring  
+
+The project integrates **IoT, robotics, and AI concepts** to create a **low-cost, educational, and scalable** solution for marine research and environmental protection.
 
 ---
-## 📂 Project Structure  
 
-AquaBot-X/  
-│  
-├── code/  
-│   └── fish_robot_code.ino      # Main Arduino/NodeMCU code  
-│  
-├── circuit/  
-│   ├── wiring_diagram.png       # Wiring diagram  
-│   └── block_diagram.png        # Block connections  
-│  
-├── images/  
-│   ├── prototype1.jpg           # Prototype photo 1  
-│   ├── prototype2.jpg           # Prototype photo 2  
-│   └── poster.jpg               # Poster for presentation  
-│  
-├── web_ui/  
-│   └── web_ui.png               # Local server web UI screenshot  
-│  
-└── README.md                    # Project documentation
+## ✨ Key Features
 
+<p align="center">
+  <img src="assets/features.gif" width="80%">
+</p>
 
-## ⚙️ How to Run  
-1. Clone this repository:  
-   ```bash
-   git clone https://github.com/vengababu-X/AquaBot-X.git
+- 🚤 **Fish-like swimming motion** using servo motors  
+- ⚡ **Gas detection (MQ-135)** with live data visualization  
+- 🌊 **Oil detection** using IR sensor  
+- 🔋 **Battery monitoring** with percentage calculation  
+- 📡 **BLE alerts** when pollution thresholds are exceeded  
+- 🌐 **Local web server** for manual & autonomous navigation  
+- 🍽️ **Fish feeding mechanism** using gear motor  
+- 🤖 Hybrid control: **AI + IoT based automation**
 
-2. Open fish_robot_code.ino in Arduino IDE.
+---
+
+## 🧠 How AquaBot-X Works
+
+<p align="center">
+  <img src="assets/architecture.svg" width="85%">
+</p>
 
 
-3. Install required libraries for ESP8266 and sensors.
+---
 
+## 🧪 Pollution & Gas Monitoring
 
-4. Upload code to NodeMCU.
+<p align="center">
+  <img src="assets/gas_monitoring.gif" width="70%">
+</p>
 
+- MQ-135 continuously monitors air/water quality  
+- Threshold-based alerts trigger **BLE notifications**  
+- Live data visualization using web interface  
 
-5. Open the local web server in your browser to control the fish bot.
+---
 
+## 🌐 Web Interface Control
 
-🏆 Applications
+<p align="center">
+  <img src="assets/web_ui.gif" width="70%">
+</p>
 
-Underwater surveillance
+- Local web server hosted on ESP8266  
+- Manual navigation (direction & speed)  
+- Autonomous mode switching  
+- Real-time sensor feedback  
 
-Marine pollution monitoring
+---
 
-Educational robotics projects
+## 🐠 Biomimetic Movement System
 
-Low-cost biomimetic research
+<p align="center">
+  <img src="assets/swimming.gif" width="70%">
+</p>
 
-👨‍💻 Author
+- Servo-driven propulsion system  
+- Fish-inspired oscillatory motion  
+- Energy-efficient underwater movement  
 
-Vengababu – Electronics & Communication Engineer, Google Student Ambassador
+---
+
+## 🔧 Hardware Components Used
+
+| Component | Purpose |
+|--------|--------|
+| NodeMCU ESP8266 | Main controller & IoT communication |
+| MQ-135 Gas Sensor | Pollution & gas detection |
+| IR Sensor | Oil detection |
+| Ultrasonic Sensor (HC-SR04) | Obstacle detection |
+| Servo Motors (x2) | Propulsion & steering |
+| Gear Motor + L298N | Feeding mechanism |
+| Mini Water Pump + Relay | Water flow control |
+| HM-10 BLE Module | Alerts & wireless communication |
+
+---
+
+## 📂 Project Structure
+AquaBot-X/
+│
+├── code/
+│   └── fish_robot_code.ino
+│
+├── circuit/
+│   ├── wiring_diagram.png
+│   └── block_diagram.png
+│
+├── images/
+│   ├── prototype1.jpg
+│   ├── prototype2.jpg
+│   └── poster.jpg
+│
+├── web_ui/
+│   └── web_ui.png
+│
+├── assets/
+│   ├── aquabot_hero.gif
+│   ├── overview.gif
+│   ├── features.gif
+│   ├── gas_monitoring.gif
+│   ├── web_ui.gif
+│   ├── swimming.gif
+│   └── architecture.svg
+│
+└── README.md
+
+---
+
+## ⚙️ How to Run the Project
+
+```bash
+git clone https://github.com/vengababu-X/AquaBot-X.git
