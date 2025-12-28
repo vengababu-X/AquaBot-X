@@ -115,6 +115,7 @@ The project integrates **IoT, robotics, and AI concepts** to create a **low-cost
 ---
 
 ## 📂 Project Structure
+```
 AquaBot-X/
 │
 ├── code/
