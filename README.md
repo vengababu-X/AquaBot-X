@@ -143,7 +143,7 @@ AquaBot-X/
 │   └── architecture.svg
 │
 └── README.md
-
+```
 ---
 
 ## ⚙️ How to Run the Project
